@@ -1,37 +1,28 @@
 var express = require('express');
-var path = require('path');
 var bodyParser = require('body-parser');
-var Post = require('./models/post');
 
 var app = express();
 app.use(bodyParser.json());
 
+/*
+var Post = require('./models/post');
 
-app.get('/', function (req, res) {
-    // res.sendfile('./layouts/index.html');       // deprecated
-    res.sendFile(path.join(__dirname, './layouts', 'index.html'));
+GET '/api/posts'
+POST '/api/posts'
+moved to controllers/api/posts.js
+ */
 
-});
+// app.use(require('./controllers/api/posts'));
+app.use(require('./controllers'));              // better to include whole folder
 
-app.get('/api/posts', function (req, res, next) {
-    Post.find()
-        .sort('-date')                      // chaining query with filter methods, here sort by date
-        .exec(function (err, posts) {
-            if(err) {return next(err); }
-            res.json(posts);
-        })
-});
-
-app.post('/api/posts', function (req, res, next) {
-    var post = new Post({
-        username: req.body.username,
-        body: req.body.body
-    });
-    post.save(function (err, post) {
-        if(err) {return next(err); }
-        res.json(201, post);                // status 201: created
-    });
-});
+// this delivers the Angular app ===================
+// app.get('/', function (req, res) {
+//     // res.sendfile('./views/index.ejs');       // deprecated
+//     res.sendFile(path.join(__dirname, './views', 'index.ejs'))
+// });
+// moved to controllers/static.js
+// app.use(require('./controllers/static'))
+//===================================================
 
 app.listen(3000, function() {
     console.log('Server listening on: ', 3000);
