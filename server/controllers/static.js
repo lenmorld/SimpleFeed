@@ -3,7 +3,7 @@ var router = express.Router();
 // var path = require('path');
 
 // use express.static to serve static files HTML, CSS< JS
-router.use(express.static(__dirname + '/../assets'));               // with this, we can reference app.js directly in index.ejs
+router.use(express.static(__dirname + '/../assets'));               // with this, we can reference app.js_old directly in index.ejs
 
 router.get('/', function (req, res) {
     // res.sendfile('./views/index.ejs');       // deprecated

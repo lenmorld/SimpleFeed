@@ -1,0 +1,1 @@
+angular.module('app', []);              // here, angular.module is a SETTER
