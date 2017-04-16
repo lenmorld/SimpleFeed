@@ -4,7 +4,7 @@ var _ = require('lodash');      // better replacement to Underscore
 var app = express();
 app.use(require('body-parser').json());
 
-var users = [{username: 'lenny', password: 'pass'}];
+var users = [{username: 'lenny', password: 'pass'}];        // PASSWORD in plaintext!!!
 var secretKey = 'supersecretkey';
 
 function findByUsername(username) {
