@@ -24,30 +24,63 @@ function validateUser(user, password, cb) {
     bcrypt.compare(password, user.password, cb);            // ASYNC version with callback
 }
 
-app.post('/session', function (req, res) {
-    // var username = req.body.username;
-    var user = findByUsername(req.body.username);
-    // TODO: validate password
+app.post('/session', function (req, res, next) {
+
+    // var user = findByUsername(req.body.username);
+
+    // validate password
+
     // SYNC BLOCKING WAY
     // if (!validateUser(user, req.body.password)) {
     //     return res.send(401);           // unauthorized
     // }
 
     // ASYNC version with callback
-    validateUser(user, req.body.password, function (err, valid) {
-        if (err || !valid)
-        { return res.send(401);}
-        var token = jwt.encode(
-            {username: user.username}, secretKey
-        );
-        res.json(token);
-    });
+    // validateUser(user, req.body.password, function (err, valid) {
+    //     if (err || !valid)
+    //     { return res.send(401);}
+    //     var token = jwt.encode(
+    //         {username: user.username}, secretKey
+    //     );
+    //     res.json(token);
+    // });
+
+    // MONGODB ==============
+    // User.findOne({username: req.body.username},
+    //     function (err, user) {          // mongodb callback
+    //         if(err) {return next(err); }
+    //         if(!user) {return res.send(401); }   // unauthorized
+    //         bcrypt.compare(req.body.password, user.password, function (err, valid) {    // compare password with saved hash password
+    //             if (err) {return next(err); }
+    //             if (!valid) {return res.send(401); }  // unauth
+    //             var token = jwt.encode({username: user.username}, secretKey);
+    //             res.json(token);
+    //         });
+    //     });
+
+    // MONGODB - more secure
+    User.findOne({username: req.body.username})
+        .select('password')                 // select password so we don't send it back
+        .exec(function (err, user) {          // mongodb callback
+            if(err) {return next(err); }
+            if(!user) {return res.send(401); }   // unauthorized
+            bcrypt.compare(req.body.password, user.password, function (err, valid) {    // compare password with saved hash password
+                if (err) {return next(err); }
+                if (!valid) {return res.send(401); }  // unauth
+                var token = jwt.encode({username: user.username}, secretKey);
+                res.json(token);
+            });
+        });
+    //=======================
 });
 
 app.get('/user', function (req, res) {
    var token = req.headers['x-auth'];
     var user = jwt.decode(token, secretKey);
-    // TODO: pull user info from DB
+    // pull user info from DB
+    User.findOne({username: user.username}, function (err, user) {
+       res.json(user);
+    });
     res.json(user);
 });
 
