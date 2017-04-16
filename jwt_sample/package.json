@@ -3,6 +3,7 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
-    "jwt-simple": "^0.5.1"
+    "jwt-simple": "^0.5.1",
+    "lodash": "^4.17.4"
   }
 }
