@@ -7,6 +7,9 @@ create user:
 auth user:
  curl -X POST -d'{"username": "lenny", "password": "pass"}' -H "Content-Type: application/json" localhost:3000/session
 
+get user, given auth:
+
+ curl -H "X-Auth: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6Imxlbm55In0.FQ2wO_VT3Hbi9oUZyVaU9p6vhaBcqg7CQ__ohufWOTc" localhost:3000/user
 
  */
 
