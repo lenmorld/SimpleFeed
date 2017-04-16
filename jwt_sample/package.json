@@ -1,9 +1,11 @@
 {
   "name": "jwt_sample",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "express": "^4.15.2",
     "jwt-simple": "^0.5.1",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "mongoose": "^4.9.4"
   }
 }
