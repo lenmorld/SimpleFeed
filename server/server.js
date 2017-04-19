@@ -24,6 +24,14 @@ app.use(require('./controllers'));              // better to include whole folde
 // app.use(require('./controllers/static'))
 //===================================================
 
+// more API routes
+// app.use('/api/sessions', require('./controllers/api/sessions'));
+// app.use('/api/users', require('./controller/api/users'));
+// -> we don't need this since we exported the whole folder
+//    as a result, sessions.js must use full route '/api/sessions'
+//    i.e. if we use /api/sessions/ here, sessions.js will use '/'
+
+
 app.listen(3000, function() {
     console.log('Server listening on: ', 3000);
 });
