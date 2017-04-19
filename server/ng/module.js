@@ -1,1 +1,3 @@
-angular.module('app', []);              // here, angular.module is a SETTER
+angular.module('app', [
+    'ngRoute'
+]);              // here, angular.module is a SETTER

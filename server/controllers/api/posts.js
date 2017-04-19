@@ -1,3 +1,5 @@
+/*
+
 // after moving this code from server.js, we need reference to app object
 // app.get(...) and app.post(...)
 // solution: wrap whole code into function that expects an app argument
@@ -12,10 +14,10 @@
 //          another possibility since the API path is common:
 //          app.use('/api/posts', require..)
 //          then:       router.get('/', function..), router.post('/', function..)
+*/
 
 var router = require('express').Router();
 var Post = require('../../models/post');
-
 
 // router.get('/api/posts', function (req, res, next) {
     // since we are now inside api folder

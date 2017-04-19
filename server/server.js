@@ -17,8 +17,8 @@ app.use(require('./controllers'));              // better to include whole folde
 
 // this delivers the Angular app ===================
 // app.get('/', function (req, res) {
-//     // res.sendfile('./views/index.ejs');       // deprecated
-//     res.sendFile(path.join(__dirname, './views', 'index.ejs'))
+//     // res.sendfile('./views/app.html.ejs');       // deprecated
+//     res.sendFile(path.join(__dirname, './views', 'app.html.ejs'))
 // });
 // moved to controllers/static.js
 // app.use(require('./controllers/static'))
