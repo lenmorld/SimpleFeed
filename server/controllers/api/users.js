@@ -16,24 +16,26 @@
 var router = require('express').Router();
 var bcrypt = require('bcrypt');
 var jwt    = require('jwt-simple');
+// var jwt    = require('jsonwebtoken');
 var User   = require('../../models/user');
 var config = require('../../config');
 
 
 // GET existing user
-router.get('/users', function (req, res) {
+router.get('/users', function (req, res, next) {
     var token = req.headers['x-auth'];
     if (!token) {
         return res.sendStatus(401);
     }
-    var user = jwt.decode(token, config.secret);
+    var user_d = jwt.decode(token, config.secret);
+    // var user_d = jwt.verify(token, config.secret);        // alternative jsonwebtoken
+
     // pull user info from DB
-    User.findOne({username: user.username}, function (err, user) {
+    User.findOne({username: user_d.username}, function (err, user) {
         if (err) { return next(err); }
         res.json(user);
     });
 });
-
 
 // POST new user
 router.post('/users', function (req, res, next) {
@@ -43,7 +45,7 @@ router.post('/users', function (req, res, next) {
     bcrypt.hash(req.body.password, 10, function (err, hash) {
         if (err) {return next(err);}
         user.password = hash;
-        user.save(function (err, user) {
+        user.save(function (err) {
             if (err) { return next(err); }
             res.sendStatus(201);
         });

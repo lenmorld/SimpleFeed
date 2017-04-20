@@ -12,6 +12,7 @@
     "gulp-sourcemaps": "^2.6.0",
     "gulp-stylus": "^2.6.0",
     "gulp-uglify": "^2.1.2",
+    "jsonwebtoken": "^7.3.0",
     "jwt-simple": "^0.5.1",
     "mongoose": "^4.9.5"
   }

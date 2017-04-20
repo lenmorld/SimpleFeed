@@ -15,25 +15,31 @@
  */
 
 var router = require('express').Router();
-var jwt = require('jwt-simple');
-// var _ = require('lodash');
 var bcrypt = require('bcrypt');
-var User = require('../../models/user');       // MongoDB User model
+var jwt    = require('jwt-simple');
+// var jwt    = require('jsonwebtoken');
+// var _ = require('lodash');
 var config = require('../../config');
+var User = require('../../models/user');       // MongoDB User model
+
 
 router.post('/sessions', function (req, res, next) {
     // validate user
     // MONGODB - more secure
-    User.findOne({username: req.body.username})
+
+    var username = req.body.username;
+
+    User.findOne({username: username})
         .select('password')                // select password so we don't send it back
-        // .select('username')
+        // .select('username')              // optional
         .exec(function (err, user) {          // mongodb callback
             if(err) {return next(err); }
             if(!user) {return res.sendStatus(401); }   // unauthorized
             bcrypt.compare(req.body.password, user.password, function (err, valid) {    // compare password with saved hash password
                 if (err) {return next(err); }
                 if (!valid) {return res.sendStatus(401); }  // unauth
-                var token = jwt.encode({username: user.username}, config.secret);
+                var token = jwt.encode({username: username}, config.secret);
+                // var token = jwt.sign({username: user.username}, config.secret);          // alternative jsonwebtoken
                 // res.json(token);
                 res.send(token);        // send it plain
             });
