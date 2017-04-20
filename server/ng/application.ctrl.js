@@ -4,4 +4,12 @@ angular.module('app')
             console.log(user);
             $scope.currentUser = user;
         });
+
+        $scope.logout = function () {
+            if ($scope.currentUser){
+                delete $scope.currentUser;
+
+                // TODO: remove JWT from requests
+            }
+        };
     });

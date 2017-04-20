@@ -4,6 +4,8 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.json());
 
+app.use(require('./auth'));     // middleware that attaches auth object, to be used by entire app
+
 /*
 var Post = require('./models/post');
 

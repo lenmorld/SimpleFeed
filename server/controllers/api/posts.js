@@ -32,10 +32,14 @@ router.get('/posts', function (req, res, next) {
 
 // router.post('/api/posts', function (req, res, next) {
 router.post('/posts', function (req, res, next) {
+    // var post = new Post({
+    //     username: req.body.username,
+    //     body: req.body.body
+    // });
     var post = new Post({
-        username: req.body.username,
-        body: req.body.body
+       body: req.body.body
     });
+    post.username = req.auth.username;      // get user from auth middleware instead of from the client
     post.save(function (err, post) {
         if(err) {return next(err); }
         res.json(201, post);                // status 201: created

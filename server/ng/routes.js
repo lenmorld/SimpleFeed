@@ -1,6 +1,10 @@
 angular.module('app')
     .config(function ($routeProvider, $locationProvider) {
         $locationProvider.hashPrefix('');       // avoid  #%2F in location
+        $locationProvider.html5Mode({
+            enabled: true,
+            requireBase: false
+        });
         $routeProvider
            .when('/',
                {
