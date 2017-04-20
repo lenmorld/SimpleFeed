@@ -8,7 +8,7 @@ exports.connect = function (server) {
     var wss = new ws.Server({server: server});
     // when a client connects to WS, connection event will be called, then it sends message to client
     wss.on('connection', function (ws) {
-        ws.send('hello!');
+        // ws.send('hello!');     // REMOVE this when Angular app, since it will corrupt data
         clients.push(ws);       // push new clients to array on conn
         exports.broadcast("new client joined");
         ws.on('close', function () {

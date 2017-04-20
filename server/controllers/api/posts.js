@@ -17,6 +17,7 @@
 */
 
 var router = require('express').Router();
+var websockets = require('../../websockets');
 var Post = require('../../models/post');
 
 // router.get('/api/posts', function (req, res, next) {
@@ -42,6 +43,7 @@ router.post('/posts', function (req, res, next) {
     post.username = req.auth.username;      // get user from auth middleware instead of from the client
     post.save(function (err, post) {
         if(err) {return next(err); }
+        websockets.broadcast('new_post', post);     // WS broadcast message
         res.json(201, post);                // status 201: created
     });
 });

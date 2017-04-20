@@ -8,9 +8,10 @@ angular.module('app')               // here angular.module is a GETTER
                     body: $scope.postBody
                 })
                 .then(function (post) {
-                    $scope.posts.unshift(post);     // if successfully POSTed to server, add to posts
+                    // $scope.posts.unshift(post);     // if successfully POSTed to server, add to posts
+                        // -> added to $scope.$on('ws:new_post') instead
                     $scope.postBody = null;
-                    // must reload UI by fetching all todo items again
+                    // must reload UI by fetching all items again
                     $scope.fetchAll();
                 });
         }
@@ -22,6 +23,12 @@ angular.module('app')               // here angular.module is a GETTER
             $scope.posts = posts.data;
         });
     };
+
+    $scope.$on('ws:new_post', function (_, post) {
+       $scope.$apply(function () {          // update UI
+            $scope.posts.unshift(post);
+       });
+    });
 
     $scope.fetchAll();
 });
